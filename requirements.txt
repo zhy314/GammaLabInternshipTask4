@@ -1,0 +1,12 @@
+# Core runtime dependencies for the data cleaning pipeline
+pandas>=1.5
+click>=8.1
+pyyaml>=6.0
+chardet>=5.0
+
+# Optional: fetching sample datasets from HuggingFace
+datasets>=2.14
+
+# Development / testing
+pytest>=7.0
+pytest-cov>=4.0

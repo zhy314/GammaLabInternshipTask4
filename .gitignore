@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Project data (do not commit raw/cleaned outputs)
+data/raw/
+data/clean/
+data/cache/
+run_manifest.json
+runs/
+
+# HuggingFace cache
+.cache/
+*.arrow
+
+# Logs
+*.log
+logs/
