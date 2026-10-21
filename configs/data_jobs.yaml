@@ -1,0 +1,35 @@
+# Cleaning rules for the lukebarousse/data_jobs dataset.
+#
+# Notable dirty-data traits:
+#   - Many duplicate postings (same title/company/location)
+#   - Salary fields may be null / zero / unrealistic outliers
+#   - Mixed casing and whitespace in string columns
+#   - Dates may be inconsistently formatted strings
+encoding_normalize: true
+
+schema:
+  columns:
+    job_title_short:   { dtype: string }
+    job_title:         { dtype: string }
+    job_location:      { dtype: string }
+    job_schedule_type: { dtype: string }
+    job_work_from_home:{ dtype: bool }
+    salary_year_avg:   { dtype: float, range: [0, 500000] }
+    salary_hour_avg:   { dtype: float, range: [0, 500] }
+    company_name:      { dtype: string }
+
+missing:
+  markers: ["", "NA", "null", "None", "NaN", "nan"]
+  strategy:
+    salary_year_avg: keep
+    salary_hour_avg: keep
+    company_name: drop_row
+    default: keep
+
+duplicates:
+  subset: ["job_title", "company_name", "job_location"]
+  keep: first
+
+illegal:
+  on_violation: coerce
+  max_ratio: 0.20

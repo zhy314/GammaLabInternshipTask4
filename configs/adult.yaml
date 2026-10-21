@@ -1,0 +1,43 @@
+# Cleaning rules for the UCI Adult Census Income dataset.
+#
+# Notable dirty-data traits:
+#   - Missing values are encoded as the string "?"
+#   - Some leading/trailing whitespace in categorical fields
+#   - Occasional full-row duplicates
+encoding_normalize: true
+
+schema:
+  columns:
+    age:            { dtype: int,    range: [0, 120] }
+    fnlwgt:         { dtype: int,    range: [0, 10000000] }
+    education-num:  { dtype: int,    range: [0, 20] }
+    capital-gain:   { dtype: int,    range: [0, 1000000] }
+    capital-loss:   { dtype: int,    range: [0, 100000] }
+    hours-per-week: { dtype: int,    range: [1, 100] }
+    workclass:      { dtype: string }
+    education:      { dtype: string }
+    marital-status: { dtype: string }
+    occupation:     { dtype: string }
+    relationship:   { dtype: string }
+    race:           { dtype: string }
+    sex:            { dtype: string, enum: ["Male", "Female"] }
+    native-country: { dtype: string }
+    income:         { dtype: string, enum: ["<=50K", ">50K"] }
+
+missing:
+  markers: ["?", "", "NA", "null", "None"]
+  strategy:
+    age: median
+    hours-per-week: median
+    workclass: mode
+    occupation: mode
+    native-country: mode
+    default: drop_row
+
+duplicates:
+  subset: null         # consider all columns
+  keep: first
+
+illegal:
+  on_violation: coerce  # fail | drop | coerce
+  max_ratio: 0.10

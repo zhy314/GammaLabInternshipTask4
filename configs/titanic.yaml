@@ -1,0 +1,41 @@
+# Cleaning rules for the Titanic dataset.
+#
+# Notable dirty-data traits:
+#   - Age and Cabin have many missing values
+#   - Embarked has sparse missing values
+#   - String columns may contain trailing whitespace / mixed case
+encoding_normalize: true
+
+schema:
+  columns:
+    PassengerId: { dtype: int,   range: [1, 100000] }
+    Survived:    { dtype: int,   enum: [0, 1] }
+    Pclass:      { dtype: int,   enum: [1, 2, 3] }
+    Name:        { dtype: string }
+    Sex:         { dtype: string, enum: ["male", "female"] }
+    Age:         { dtype: float, range: [0, 120] }
+    SibSp:       { dtype: int,   range: [0, 20] }
+    Parch:       { dtype: int,   range: [0, 20] }
+    Ticket:      { dtype: string }
+    Fare:        { dtype: float, range: [0, 1000] }
+    Cabin:       { dtype: string }
+    Embarked:    { dtype: string, enum: ["C", "Q", "S"] }
+
+missing:
+  markers: ["", "NA", "null", "None", "NaN", "nan"]
+  strategy:
+    Age: median
+    Fare: median
+    Embarked: mode
+    Cabin: constant
+    default: keep
+  constant:
+    Cabin: "Unknown"
+
+duplicates:
+  subset: ["PassengerId"]
+  keep: first
+
+illegal:
+  on_violation: coerce
+  max_ratio: 0.05
