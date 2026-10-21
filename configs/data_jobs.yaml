@@ -13,7 +13,7 @@ schema:
     job_title:         { dtype: string }
     job_location:      { dtype: string }
     job_schedule_type: { dtype: string }
-    job_work_from_home:{ dtype: bool }
+    job_work_from_home: { dtype: bool }
     salary_year_avg:   { dtype: float, range: [0, 500000] }
     salary_hour_avg:   { dtype: float, range: [0, 500] }
     company_name:      { dtype: string }

@@ -3,9 +3,8 @@ set -euo pipefail
 
 python scripts/fetch_datasets.py titanic
 
-dataclean clean \
+dataclean -v clean \
   --input  data/raw/titanic.csv \
   --output data/clean/titanic.clean.csv \
   --config configs/titanic.yaml \
-  --report runs/titanic.manifest.json \
-  -v
+  --report runs/titanic.manifest.json
